@@ -1,0 +1,5 @@
+1. How to add time using vi	--> :r!date
+
+2. How to enable copy $ paste between VNC and Windows (or Mac): In VNC, open a terminal --> vncconfig -nowin &
+
+
