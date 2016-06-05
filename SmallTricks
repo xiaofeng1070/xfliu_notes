@@ -2,4 +2,7 @@
 
 2. How to enable copy $ paste between VNC and Windows (or Mac): In VNC, open a terminal --> vncconfig -nowin &
 
+3. Extract a file from a large tar file (Extract a file called etc/deault/sysstate from config.tar.gz tarball)
+   tar -zxvf conig.tar.gz etc/default/sysstat
 
+4. 
