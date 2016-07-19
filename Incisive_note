@@ -1,0 +1,86 @@
+1.	Tcl "probe -screen" command can be used to monitor the value changes specific objects and display the value on the screen. (So there mighe be no need to add $display in RTL.)
+
+2.	You can enable global X-Propagation when elaborating yoiur design by including the -xprop option on the command line. With this option, you can set FOX or CAT mode.
+
+3.	$ncls -snapshot      (Can be used to check snapshot information under simulaiton directory)
+
+4.	-timescale 1ns/1ps -override_timescale
+
+5.	-timescale 1ns/1ps -override_precision
+
+6.	Avoid Running Incisive with -access+rwc
+	When Incisive simulator runs with -access+rwc, it allows reading/writing of all signals, and, therefore, many optimization are not performaed.
+
+7.	-access: access_specification:
+	r (read access): You can not probe and generate waveforms for objects that do not have read access. You can not display the value of these objects with tCL commands such as value or describe. PLI/VPI/VHPI applications can not get the values of objects tagged as having no read access.
+	
+	w (write access): You can not modify the values of objects that do not have write access. Write access is required for forcing or depositing values with TCL force and deposit commands, or for a PLI/VPI/VHPI application to put values to objects.
+	
+	c (connectivity access): You can not display the drivers of a particular wire or register if the object does not have connectivity access. Connectivity access is required for tracing signals in the Trace Signals sidebar, and for a PLI/VPI/VHPI appliation to scan for loads or drivers of an object.
+	
+	By deault,  objects do not have read, write, or connectivity access. In other words, the default is -access -r-w-c
+	These options provide visbility into different parts of a design and enable debugging features, but disable optimizations performed inside the simulator. Because these options slow down performance, you should provide the minimum amount of access possible by specifying only the kind of access you need for specific objects, instances, or portions of the design (Using an Access File)
+
+
+	By default, the elaborator marks all simulation objects in the design as having no read or write access, and disables access to connectivity (load and driver) information. Turning off these three forms of access allows the elaborator to perform a set of optimizations that can dramatically improve simulation performance.
+
+
+
+8.	-nostaticness:	Do not do a staticness test for nets and regs --> what's that mean?
+
+9.	-nocellaccess:	What's this option used for?
+
+10.	-gateloopwarn:	What's this option used for?
+
+11.	-dumpstack: It's elab option, should add -rebuild option and same time.
+		    Do not add -tcl option for irun command
+
+12.     -linedebug: It will turn off all optimization options. But could make simulation really slow. It might be useful for some crash workaround. Remember, it will work if optimization caused crashing.
+
+13.	With side acceptance of STA and Formal verificaion tools by the industry, one quetstion still arises in the minds on many, "Why do we need gate level simulation?"
+	1)   Synthesis and simulaiton mismatch: Your sysnthesized netlist might not behave functioinally as expected. --> why?
+	2)  To check if reset release, initialization sequence and boot-up is proper.
+	3)  Since Scan insertions occur during and after synthesis, they are not checked by simulation.
+	4)  STA doe not analyze asynchronous interfaces. --> Really?
+	5)  Unwarranted usage of wild cards in static timing constraints set false and multi cycle path where they don't belong. This can also be due to design changes, mis-understanding or typos.
+	6)  Usage of create_clock instead of using create_generated_clock between clock domains.
+	7)  For switching factor to estimate power.
+	8)  X's in RTL sim can be pressmistic or optimistic. Any unintended dependencies on initial conditions can be found through GLS.
+	9)  Design changes, wrong understanding of the design can lead to incorrect false paths or multicycle paths in the constaints.
+	10) Can be used to study the activity factor for power estimation.
+	11) It's an excellent feel good quotient that the design has been implemented correctly.
+
+	Gate level simulation is used to check and ensure that the functionality is not lost during high-lvel RTL to low-level gates implementation and also when timing is enabled, to ensure timing delays do not break the intended functionlity.
+
+	Static timing analysis (STA) and Equivalence Checking (EC) have reduced the need for GLS to some extent. However, so far, the static tools are not able to cover all the verification needs. So GLS remains a significant step of the verifation cycle footprint. There are multiple reasons why GLS is so imports.
+
+
+14.	`timescale is used to determine how time is expresented as an integer internally to to the simulator.
+	precision defines the smallest possible time-step you can take.
+
+15.	What is the usage of "-nonotifier" option?
+	Ignore notifiers in timing checks.
+	Timing check notifiers let you detect timing violaitons behaviorally, and take an action as soon as they occur. For example, you may print an informative error message describing the violation, or you may propagate an x value at the output of the device that report the violation.
+	A notifier is a register that you pass as the last argument to a system timing check. The register must be declared in the module where the timing check tasks are inovked. The notifier is an optional argument that cat be ommitted from the timing check call without affecting operation.
+	If a notifier is included as the last argument, a timing violation will toggle the notifier's value.
+
+16. 	-cdslib, -hdlvar : Use the specified cds.lib or hdl.var file.
+
+	-tcl: ncsim option. Invoke simulator in interactive mode.  You can also add “Define NCSIMOPTS -tcl” into “hdl.var”  to invoke interactive mode.
+
+	-batch:     Start simulation without waiting for command input. It can override -tcl option.
+
+	NCSIMRC:     Add “Define NCSIMRC my_ncsimrc”. You can use NCSIMRC variable to define a file of commands to run at the begging of every simulation.
+
+	-input:     Allows you to specify a file name or a simulator command as an argument.
+	Example:
+	     ncsim <snapshot> -input my_cmd.tcl
+	     ncsim <snapshot> -input “@stop -line 22"
+
+	ncsim>where   : Display the current simulation location
+
+	ncsc_env_check:  Cadence-provided diagnostic utility ucsc_env_check lets you verify that your environment configuration meets the requirements imposed by the various IES tools.
+
+17.	For fsdb waveform parallel dumping: setenv NOVAS_FSDB_PARALLE 1
+
+18.	 	
