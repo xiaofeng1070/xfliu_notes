@@ -1,8 +1,15 @@
-1.	Tcl "probe -screen" command can be used to monitor the value changes specific objects and display the value on the screen. (So there mighe be no need to add $display in RTL.)
+# Incisive Study Notes
 
-2.	You can enable global X-Propagation when elaborating yoiur design by including the -xprop option on the command line. With this option, you can set FOX or CAT mode.
+Hello! This note is used to record my study notes of incisive tools.
 
-3.	$ncls -snapshot      (Can be used to check snapshot information under simulaiton directory)
+## Notes
+
+* Tcl **"probe -screen"** command can be used to monitor the value changes specific objects and display the value on the screen.  
+So there mighe be no need to add $display in RTL.
+
+* You can enable global X-Propagation when elaborating your design by including the **"-xprop"** option on the command line. With this option, you can set **FOX** or **CAT** mode.
+
+* **"$ncls -snapshot"**: Can be used to check snapshot information under simulaiton directory.
 
 4.	-timescale 1ns/1ps -override_timescale
 
@@ -83,4 +90,19 @@
 
 17.	For fsdb waveform parallel dumping: setenv NOVAS_FSDB_PARALLE 1
 
-18.	 	
+18.	Running the simulator is separated into three major steps:
+	1) Compilation with ncsc, ncvhdl, or ncvflog:
+	   a. Checks syntax and semantics
+	   b. Creates design data objects (SCD, AST, VST)
+	   c. Creates SystemC and VHDL code objects. (.o, COD)
+	2) Elaboration (expansion and linking) with ncelab
+	   a. Constructs design hierearchy and connects signals
+	   b. Creates signature object (SIG) and Verilog code object (COD)
+	   c. Creates initial simulation snapshot object (SSS)
+	3) Simulation with ncsim
+	   a. Executes simulation code
+
+19.	   How to extract SHM database:
+	   Use simvisdbutil
+
+20.	   
